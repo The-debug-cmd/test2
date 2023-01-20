@@ -55,10 +55,14 @@ class Polynomial:
         return self - other
     
     def __sub__(self, other):
+        if isinstance(other, Number):
+            other=Polynomial((other,))
         new = self + Polynomial(tuple([i*-1 for i in other.coefficients]))
         return new
 
     def __mul__(self,other):
+        if isinstance(other, Number):
+            other=Polynomial((other,))
         if self.degree()==0 or other.degree()==0:
             if self.degree()==0:
                 return Polynomial(tuple([i*self.coefficients[0] for i in other.coefficients]))
@@ -75,5 +79,4 @@ class Polynomial:
                 b=b.__add__(a)
             return b
 
-
-    
+print(Polynomial((2,22)).__rsub__(2))
