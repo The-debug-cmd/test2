@@ -111,3 +111,14 @@ class Polynomial:
         powered=[self.coefficients[i]*other**i for i in range(len(self.coefficients))]
         powa=sum(powered)
         return powa
+    def dx(self):
+        if self.degree()==0:
+            return Polynomial((0,))
+        listr=[[list(self.coefficients)[i]*i for i in range(len(self.coefficients))][i+1] for i in range(len(list(self.coefficients))-1)]
+        listr=Polynomial(tuple(listr))
+        return listr
+    
+    
+    
+def derivative(thang):
+        return thang.dx()
