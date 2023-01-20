@@ -52,7 +52,6 @@ class Polynomial:
         return self + other
     
     def __rsub__(self, other):
-        print(self)
         return other+(self*-1)
     
     def __sub__(self, other):
@@ -72,19 +71,18 @@ class Polynomial:
         elif self.degree()>0 and other.degree()>0:
             
             b=[i*other.coefficients[0] for i in self.coefficients]
-            print(b)
-            print('b')
+            
             b=tuple(b)
             b=Polynomial(b)
             for d in range (other.degree()):
-                print(d)
+                
                 a=[i*other.coefficients[d+1] for i in self.coefficients]
-                print(a)
+                
                 a=tuple([0]*(d+1)+a)
-                print(a)
+                
                 a=Polynomial(a)
                 b=b+a
-                print(b)
+                
             return b
     def __rmul__(self,other):
         if isinstance(other, Number):
@@ -104,5 +102,12 @@ class Polynomial:
                 a=Polynomial(a)
                 b=b.__add__(a)
             return b
-
-print(Polynomial((1, 2, 3)) * Polynomial((4, 3, 2, 1)))
+    def __pow__(self,other):
+        result=self
+        for i in range (other-1):
+            result=self*result
+        return result
+    def __call__(self,other):
+        powered=[self.coefficients[i]*other**i for i in range(len(self.coefficients))]
+        powa=sum(powered)
+        return powa
