@@ -50,3 +50,30 @@ class Polynomial:
 
     def __radd__(self, other):
         return self + other
+    
+    def __rsub__(self, other):
+        return self - other
+    
+    def __sub__(self, other):
+        new = self + Polynomial(tuple([i*-1 for i in other.coefficients]))
+        return new
+
+    def __mul__(self,other):
+        if self.degree()==0 or other.degree()==0:
+            if self.degree()==0:
+                return Polynomial(tuple([i*self.coefficients[0] for i in other.coefficients]))
+            elif other.degree()==0:
+                return Polynomial(tuple([i*other.coefficients[0] for i in self.coefficients]))
+        elif self.degree()>1 and other.degree()>0:
+            b=other.coefficients[0]*list(self.coefficients)
+            b=tuple(b)
+            b=Polynomial(b)
+            for d in range (other.degree()):
+                a=[i*other.coefficients[d+1] for i in self.coefficients]
+                a=tuple([0]*(d+1)+a)
+                a=Polynomial(a)
+                b=b.__add__(a)
+            return b
+
+
+    
