@@ -52,7 +52,8 @@ class Polynomial:
         return self + other
     
     def __rsub__(self, other):
-        return self - other
+        print(self)
+        return other+(self*-1)
     
     def __sub__(self, other):
         if isinstance(other, Number):
@@ -68,8 +69,33 @@ class Polynomial:
                 return Polynomial(tuple([i*self.coefficients[0] for i in other.coefficients]))
             elif other.degree()==0:
                 return Polynomial(tuple([i*other.coefficients[0] for i in self.coefficients]))
-        elif self.degree()>1 and other.degree()>0:
-            b=other.coefficients[0]*list(self.coefficients)
+        elif self.degree()>0 and other.degree()>0:
+            
+            b=[i*other.coefficients[0] for i in self.coefficients]
+            print(b)
+            print('b')
+            b=tuple(b)
+            b=Polynomial(b)
+            for d in range (other.degree()):
+                print(d)
+                a=[i*other.coefficients[d+1] for i in self.coefficients]
+                print(a)
+                a=tuple([0]*(d+1)+a)
+                print(a)
+                a=Polynomial(a)
+                b=b+a
+                print(b)
+            return b
+    def __rmul__(self,other):
+        if isinstance(other, Number):
+            other=Polynomial((other,))
+        if self.degree()==0 or other.degree()==0:
+            if other.degree()==0:
+                return Polynomial(tuple([(i)*(self.coefficients[0]+1) for i in self.coefficients]))
+            elif self.degree()==0:
+                return Polynomial(tuple([i*other.coefficients[0] for i in other.coefficients]))
+        elif self.degree()>0 and other.degree()>0:
+            b=[i*other.coefficients[0] for i in self.coefficients]
             b=tuple(b)
             b=Polynomial(b)
             for d in range (other.degree()):
@@ -79,4 +105,4 @@ class Polynomial:
                 b=b.__add__(a)
             return b
 
-print(Polynomial((2,22)).__rsub__(2))
+print(Polynomial((1, 2, 3)) * Polynomial((4, 3, 2, 1)))
